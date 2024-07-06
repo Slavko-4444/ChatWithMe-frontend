@@ -1,0 +1,36 @@
+.message-send {
+  width: inherit;
+}
+
+.send-letter,
+.send-item {
+  display: inline-flex;
+  justify-content: center;
+  margin-right: 0.8rem;
+  align-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%; /* Makes the icon circular */
+  background-color: #cfedf7; /* Fancy background color */
+  color: #333; /* Icon color */
+  font-size: 14px; /* Adjust the font size of the icon */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+}
+.send-letter {
+  margin: 0;
+  margin-left: auto;
+  color: white;
+  width: 2.9rem;
+  height: 2.9rem;
+  background-color: rgb(0, 0, 255);
+}
+
+.send-letter,
+.send-item:hover {
+  cursor: pointer;
+}
+.send-letter-v2 {
+  width: 2.7rem;
+  height: 2.7rem;
+  background-color: rgb(0, 0, 197);
+}

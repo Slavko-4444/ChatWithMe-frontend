@@ -1,0 +1,32 @@
+.fancy-chat-icon {
+  background-color: #f0f0f0; /* Light gray background */
+  width: 2.2rem;
+  height: 2.2rem;
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.fancy-chat-icon:hover * {
+  cursor: pointer;
+}
+.top-message {
+  width: inherit;
+  background-color: white;
+}
+.top-message {
+  width: inherit;
+  background-color: white;
+}
+
+.chat-member-img {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  margin-right: 0.7rem;
+}

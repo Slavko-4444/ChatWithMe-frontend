@@ -1,0 +1,27 @@
+.main-side {
+  position: relative;
+}
+.main-side div {
+  box-sizing: border-box;
+}
+
+#dot {
+  display: none;
+}
+.pi {
+  transition: all 0.5s;
+}
+
+.message-box {
+  transition: all 0.5s;
+  background-color: white;
+}
+#dot:checked ~ .message-box {
+  width: 100%;
+}
+#dot:checked .top-message {
+  width: 100%;
+}
+#dot:checked ~ .pi {
+  display: none;
+}
