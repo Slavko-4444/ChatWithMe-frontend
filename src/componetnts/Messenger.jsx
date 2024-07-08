@@ -11,8 +11,8 @@ const Messenger = () => {
   const slideInfo = useRef();
   const getClassName = () => {
     return isChecked
-      ? "absolute  h-full top-0 pi border-l"
-      : "absolute  h-full top-0 right-0 w-4/12  pi border-l";
+      ? "absolute h-full top-0 pi border-l"
+      : "absolute h-full top-0 right-0 w-4/12  pi border-l";
   };
 
   const handleCheck = () => {

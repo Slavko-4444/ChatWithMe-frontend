@@ -5,18 +5,14 @@
   gap: 1rem;
   padding: 1rem;
   background-color: #f7f9fc56;
-  overflow: hidden;
+  /* overflow: hidden; */
+  overflow-y: auto;
   position: relative;
   height: calc(100% - 6rem - 4rem);
 }
-.simplebar-scrollbar:before {
-  background-color: #007bff; /* Customize the scrollbar color */
-  border-radius: 10px; /* Make the scrollbar rounded */
-}
 
-.simplebar-track.simplebar-vertical {
-  width: 8px; /* Set the width of the vertical scrollbar */
-  right: 2px; /* Adjust the position if needed */
+.message-content::-webkit-scrollbar {
+  display: none;
 }
 
 .message {

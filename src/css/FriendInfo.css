@@ -1,0 +1,26 @@
+.image-friend {
+  position: relative;
+  width: 100%;
+  background-image: url("/images/mica.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.image-friend::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.349);
+  transition: background 0.3s ease;
+  z-index: 1;
+}
+
+.image-friend:hover::before {
+  background: transparent;
+}
+.data-show::-webkit-scrollbar {
+  display: none;
+}

@@ -21,7 +21,7 @@ const MessageSend = () => {
     SetSubmitClass("send-letter send-letter-v2");
   };
   return (
-    <div className="absolute bottom-0 h-16 bg-slate-50 border message-send px-5 grid items-center grid-row grid-cols-12">
+    <div className="absolute bottom-0 h-16 bg-slate-50 border-y message-send px-5 grid items-center grid-row grid-cols-12">
       <div className="col-span-2 flex">
         <div className="send-item">
           <FaRegImage size={16} />
