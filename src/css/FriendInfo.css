@@ -24,3 +24,12 @@
 .data-show::-webkit-scrollbar {
   display: none;
 }
+
+.data-show > div {
+  position: relative;
+  width: 100%;
+  background-image: url("/images/zika.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}

@@ -34,8 +34,8 @@ const MessageSend = () => {
         </div>
       </div>
       <div className="col-span-9 ">
-        <label class="relative block">
-          <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+        <label className="relative block">
+          <span className="absolute inset-y-0 left-0 flex items-center pl-2">
             <SiLiberadotchat size={15} color="gray" />
           </span>
 

@@ -8,8 +8,7 @@ import MessageContent from "./MessageContent";
 
 const Messenger = () => {
   const [isChecked, setIsChecked] = useState(false);
-  const slideInfo = useRef();
-  const getClassName = () => {
+  const getClass = () => {
     return isChecked
       ? "absolute h-full top-0 pi border-l"
       : "absolute h-full top-0 right-0 w-4/12  pi border-l";
@@ -38,7 +37,7 @@ const Messenger = () => {
           <MessageSend />
         </div>
 
-        <div className={getClassName()}>
+        <div className={getClass()}>
           <FriendInfo />
         </div>
       </div>

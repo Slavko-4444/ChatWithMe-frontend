@@ -6,9 +6,13 @@ import "../css/ShortFriendInfo.css";
 
 const ShortFriendInfo = () => {
   return (
-    <div className="absolute flex justify-between items-center top-0 h-24 border px-5 top-message">
+    <div className="absolute flex justify-between items-center top-0 h-24 border border-l-0 px-5 top-message">
       <div className="flex items-center ">
-        <img src="/images/mica30896.jpg" class="chat-member-img" alt="photo" />
+        <img
+          src="/images/mica30896.jpg"
+          className="chat-member-img chat"
+          alt="photo"
+        />
         <p className="text-2xl">Milica Sosic</p>
       </div>
       <div className="flex flex-row-reverse ">
