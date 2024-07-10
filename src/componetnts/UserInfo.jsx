@@ -7,7 +7,7 @@ const UserInfo = () => {
   return (
     <div className="h-24 p-3 relative flex bg-slate-800  user-info-card">
       <div className="">
-        <img src="/images/mica30896.jpg" className="userinfo" alt="photo" />
+        <img src="/images/zika.jpg" className="userinfo" alt="photo" />
       </div>
       <div className="text-2xl text-white  w-full flex justify-center items-center title-userinfo">
         Milos Sosic

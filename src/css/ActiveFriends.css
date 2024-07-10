@@ -1,0 +1,35 @@
+.friend-list-all::-webkit-scrollbar,
+.friend-active-list::-webkit-scrollbar {
+  display: none;
+}
+
+.online-status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 1.1rem;
+  height: 1.1rem;
+  background-color: green;
+  border: 2px solid white; /* Adjust the border to create a clear distinction */
+  border-radius: 50%;
+}
+
+.friend-active-list {
+  overflow-x: auto;
+  white-space: nowrap;
+  display: flex;
+}
+
+.friend-image {
+  width: 4rem;
+  height: 4rem;
+  background-color: lightgray;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.f-i {
+  width: 4.5rem;
+  height: 4.5rem;
+}

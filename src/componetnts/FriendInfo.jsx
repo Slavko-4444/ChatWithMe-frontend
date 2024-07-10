@@ -27,7 +27,6 @@ const FriendInfo = () => {
     links: false,
     chatInfo: false,
   });
-  useEffect(() => console.log(clickItems), [clickItems]);
 
   const onClickItmeEvent = (msg) => {
     let newItems = {
@@ -46,7 +45,7 @@ const FriendInfo = () => {
         <p className="text-center text-xl">Milica Sosic</p>
         <p className="text-center text-green-600 font-semibold">Active</p>
       </div>
-      <div className="p-2 m-4 h-32 xl:h-16  grid grid-row grid-cols-1 xl:grid-cols-3 gap-4">
+      <div className="p-2 m-4 h-28 xl:h-14  grid grid-row grid-cols-1 xl:grid-cols-3 gap-4">
         <div
           className="border flex justify-center items-center rounded-3xl bg-slate-400 text-white font-semibold hover:cursor-pointer hover:bg-slate-500"
           onClick={() => onClickItmeEvent("images")}
