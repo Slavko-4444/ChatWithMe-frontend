@@ -5,27 +5,11 @@ import Register from "./componetnts/Register";
 import "simplebar/dist/simplebar.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import "./css/App.css";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  createRoutesFromElements,
-  Route,
-} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { Bounce, ToastContainer, toast } from "react-toastify";
+import ProtectedRoute from "./componetnts/ProtectedRoute";
 
 function App() {
-  const notify = () => toast.success("Wow so easy !");
-
-  const router = createBrowserRouter(
-    createRoutesFromElements(
-      <>
-        <Route path="/" element={<Messenger />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-      </>
-    )
-  );
-
   return (
     <div className="App">
       <ToastContainer
@@ -42,7 +26,13 @@ function App() {
         limit={3}
       />
       <div className="md:h-screen content">
-        <RouterProvider router={router} />
+        <Routes>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<Messenger />} />
+          </Route>
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
       </div>
       <Footer />
     </div>

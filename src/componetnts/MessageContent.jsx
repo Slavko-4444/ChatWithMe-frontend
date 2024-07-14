@@ -1,8 +1,6 @@
 import React from "react";
 import "../css/MessageContent.css";
 
-import SimpleBar from "simplebar-react";
-
 const Message = ({ type, text, status, date }) => {
   return (
     <div className={`message ${type}`}>

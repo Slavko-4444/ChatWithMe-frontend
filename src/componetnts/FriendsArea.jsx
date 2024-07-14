@@ -3,8 +3,6 @@ import "../css/FriendsArea.css";
 import UserInfo from "./UserInfo";
 import ActiveFriends from "./ActiveFriends";
 import FriendsList from "./FriendsList";
-import "simplebar-react/dist/simplebar.min.css";
-import SimpleBar from "simplebar-react";
 
 const FriendsArea = () => {
   return (

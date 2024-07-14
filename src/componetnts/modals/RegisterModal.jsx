@@ -1,13 +1,13 @@
 import React from "react";
 import "../../css/css-modals/registerModal.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { authStatusAtom } from "../../recoil/atoms/userAtoms";
+import { authStatusAtom, userAtom } from "../../recoil/atoms/userAtoms";
 
 const RegisterModal = (props) => {
   const { toggleModal, loadImage, userData } = props;
   const [authStatus, setAuthStatus] = useRecoilState(authStatusAtom);
+  const [token, setToken] = useRecoilState(userAtom);
 
   const doRegistration = async () => {
     const { userName, email, password, confirmPassword, image } = userData;
@@ -30,8 +30,11 @@ const RegisterModal = (props) => {
         config
       );
 
-      localStorage.setItem("authToken", response.data.successMessage);
+      localStorage.setItem("authToken", response.data.token);
 
+      setToken({
+        token: response.data.token,
+      });
       setAuthStatus({
         successMessage: response.data.successMessage,
         errorMessage: null,

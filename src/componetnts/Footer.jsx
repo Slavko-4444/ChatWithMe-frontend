@@ -6,11 +6,12 @@ import {
   FaTwitter,
   FaTwitch,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const sections = [
   {
     title: "Chat_With_Me",
-    items: ["About", "Login", "Register"],
+    items: ["Home", "Login", "Register"],
   },
 ];
 
@@ -32,7 +33,7 @@ const Footer = () => {
             <ul>
               {section.items.map((item, i) => (
                 <li key={i} className="py-1 text-gray-500 hover:text-white">
-                  {item}
+                  <Link to={"/" + item.toLowerCase()}>{item}</Link>
                 </li>
               ))}
             </ul>
