@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../css/ActiveFriends.css";
-import axios from "axios";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   currentFriendAtom,
   friendsListAtom,
@@ -9,6 +8,7 @@ import {
 
 const FriendBlock = ({ friend }) => {
   const [currFriend, setCurrFriend] = useRecoilState(currentFriendAtom);
+
   const toggleMessageContent = () =>
     setCurrFriend({
       userName: friend.userName,
@@ -33,26 +33,7 @@ const FriendBlock = ({ friend }) => {
 };
 
 const FriendsList = () => {
-  const [friends, setFriends] = useRecoilState(friendsListAtom);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-        const response = await axios.get("/api/api/chat-with/get-friends");
-        setFriends(response.data.friends);
-      } catch (error) {
-        console.log("sta je", error.response.data.error.errorMessage);
-      }
-    }
-
-    fetchData();
-  }, []);
-  useEffect(() => {}, [friends]);
+  const friends = useRecoilValue(friendsListAtom);
   return (
     <div className="mt-2 friend-list-all flex-1 overflow-y-auto">
       {friends.length ? (

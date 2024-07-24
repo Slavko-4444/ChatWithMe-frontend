@@ -5,10 +5,13 @@ import { GoGift } from "react-icons/go";
 import { FaRegPaperPlane } from "react-icons/fa";
 import { BsEmojiWink } from "react-icons/bs";
 import { SiLiberadotchat } from "react-icons/si";
+import { useRecoilValue } from "recoil";
+import { currentFriendAtom } from "../recoil/atoms/friendsAtoms";
 
 const MessageSend = () => {
   const [text, setText] = useState("");
   const [subimtClass, SetSubmitClass] = useState("send-letter");
+  const currFriend = useRecoilValue(currentFriendAtom);
 
   const handleInput = (e) => {
     e.target.style.height = "auto";

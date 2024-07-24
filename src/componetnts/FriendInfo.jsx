@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../css/FriendInfo.css";
+import { useRecoilValue } from "recoil";
+import { currentFriendAtom } from "../recoil/atoms/friendsAtoms";
 
 const ImagesData = () => {
   return (
@@ -28,6 +30,8 @@ const FriendInfo = () => {
     chatInfo: false,
   });
 
+  const currFriend = useRecoilValue(currentFriendAtom);
+
   const onClickItmeEvent = (msg) => {
     let newItems = {
       images: false,
@@ -40,9 +44,15 @@ const FriendInfo = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <div className="h-80 image-friend"></div>
+      <div className="relative h-96 w-full overflow-hidden image-friend">
+        <img
+          src={"/images/" + currFriend.image}
+          className="absolute inset-0 w-full h-full object-cover"
+          alt="image-profile"
+        />
+      </div>
       <div className="m-4 p-1 border border-x-0 h-14 hover:p-2 hover:h-16 hover:cursor-pointer transition-all">
-        <p className="text-center text-xl">Milica Sosic</p>
+        <p className="text-center text-xl capitalize">{currFriend.userName}</p>
         <p className="text-center text-green-600 font-semibold">Active</p>
       </div>
       <div className="p-2 m-4 h-28 xl:h-14  grid grid-row grid-cols-1 xl:grid-cols-3 gap-4">

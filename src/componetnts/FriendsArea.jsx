@@ -1,10 +1,73 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../css/FriendsArea.css";
 import UserInfo from "./UserInfo";
 import ActiveFriends from "./ActiveFriends";
+import { io } from "socket.io-client";
 import FriendsList from "./FriendsList";
+import { jwtDecode } from "jwt-decode";
+import {
+  activefriendsListAtom,
+  currentFriendAtom,
+  friendsListAtom,
+} from "../recoil/atoms/friendsAtoms";
+import { useRecoilState } from "recoil";
+import axios from "axios";
 
 const FriendsArea = () => {
+  const afSocket = useRef();
+  const decoded = jwtDecode(localStorage.getItem("authToken"));
+
+  const [currFriend, setCurrFriend] = useRecoilState(currentFriendAtom);
+  const [friends, setFriends] = useRecoilState(friendsListAtom);
+  const [currentFriends, setCurrentFrineds] = useRecoilState(
+    activefriendsListAtom
+  );
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const response = await axios.get("/api/api/chat-with/get-friends");
+        setFriends(response.data.friends);
+        setCurrFriend({
+          userName: response.data.friends[0].userName,
+          email: response.data.friends[0].email,
+          image: response.data.friends[0].image,
+        });
+      } catch (error) {
+        console.log("sta je", error.response.data.error.errorMessage);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  // useEffect(() => {}, [friends]);
+
+  useEffect(() => {
+    afSocket.current = io("ws://localhost:8000");
+  }, []);
+  useEffect(() => {
+    const userInfo = {
+      id: decoded.id,
+      email: decoded.email,
+      userName: decoded.userName,
+      image: `/images/${decoded.image}`,
+    };
+
+    afSocket.current.emit("addUser", userInfo);
+  }, []);
+
+  useEffect(() => {
+    afSocket.current.on("getActives", (data) => {
+      setCurrentFrineds(data);
+    });
+  }, []);
+
   return (
     <div className="w-full h-full flex flex-col border-r my_fr">
       <UserInfo />
@@ -22,7 +85,7 @@ const FriendsArea = () => {
           />
         </div>
       </div>
-      <ActiveFriends />
+      <ActiveFriends actives={currentFriends} />
 
       <FriendsList />
     </div>
