@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../css/Messenger.css";
 import FriendInfo from "./FriendInfo";
 import FriendsArea from "./FriendsArea";
@@ -12,27 +12,35 @@ import axios from "axios";
 import { MessagesAtom } from "../recoil/atoms/messageAtoms";
 
 const Messenger = () => {
+  const scrollRef = useRef();
+
   const currFriend = useRecoilValue(currentFriendAtom);
   const userInfo = useRecoilValue(userAtom);
   const [message, setMessage] = useRecoilState(MessagesAtom);
   const [isChecked, setIsChecked] = useState(false);
   const [text, setText] = useState("");
 
+  const getMessage = async () => {
+    try {
+      const response = await axios.get(
+        `/api/api/chat-with/get-messages/${currFriend._id}`
+      );
+      setMessage(response.data.message);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
   useEffect(() => {
-    (async () => {
-      try {
-        console.log("sta se desava", currFriend);
-        const response = await axios.get(
-          `/api/api/chat-with/get-messages/${currFriend._id}`
-        );
-        setMessage(response.data.message);
-      } catch (error) {
-        console.log(error.response);
-      }
-    })();
+    getMessage();
   }, [currFriend]);
 
-  useEffect(() => {}, [message]);
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+      inline: "nearest",
+    });
+  }, [message]);
 
   const getClass = () => {
     return isChecked
@@ -62,7 +70,7 @@ const Messenger = () => {
         messageBlock,
         config
       );
-      console.log("stigao odgovor", response.data);
+      getMessage();
       setText("");
     } catch (error) {
       console.log(error.response);
@@ -84,7 +92,11 @@ const Messenger = () => {
 
         <div className="w-4/6 z-10 message-box">
           <ShortFriendInfo />
-          <MessageContent message={message} senderId={userInfo.id} />
+          <MessageContent
+            message={message}
+            senderId={userInfo.id}
+            scrollRef={scrollRef}
+          />
           <MessageSend
             text={text}
             setText={setText}

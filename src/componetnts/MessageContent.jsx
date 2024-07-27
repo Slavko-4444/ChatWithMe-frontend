@@ -1,12 +1,12 @@
 import React from "react";
 import "../css/MessageContent.css";
 
-const Message = ({ type, text, status, date }) => {
+const Message = ({ type, text, status, date, index, scrollRef }) => {
   const [dt, time] = date.split("T");
   const [hours, minutes] = time.split(":");
   return (
-    <div className={`message ${type}`}>
-      <p className="message-text">{text}</p>
+    <div ref={scrollRef} className={`message ${type}`} key={index}>
+      <p className="message-text inline">{text}</p>
       <div className="message-info">
         <span className={`message-status ${status.toLowerCase()}`}>
           {status}
@@ -18,11 +18,11 @@ const Message = ({ type, text, status, date }) => {
     </div>
   );
 };
-const MessageContent = ({ message, senderId }) => {
+const MessageContent = ({ message, senderId, scrollRef }) => {
   return (
     <div className="top-24 bottom-16  message-content">
       {message?.map((msg, index) => {
-        let TYPE = msg.senderId !== senderId ? "comming" : "sending";
+        let TYPE = msg.senderId !== senderId ? "coming" : "sending";
 
         return (
           <Message
@@ -30,7 +30,8 @@ const MessageContent = ({ message, senderId }) => {
             text={msg.message.text}
             status={msg.status}
             date={msg.updatedAt}
-            key={index}
+            index={index}
+            scrollRef={scrollRef}
           />
         );
       })}

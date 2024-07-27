@@ -44,7 +44,7 @@ const UserInfo = () => {
   };
 
   return (
-    <div className="h-24 p-3 relative flex bg-slate-800  user-info-card">
+    <div className="h-72 p-3 relative flex flex-col bg-slate-800 lg:h-24 md:flex-row   user-info-card">
       {seeLogut ? (
         <LogOutModal
           toggleModal={toggleModal}
