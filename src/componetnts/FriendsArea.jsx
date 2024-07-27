@@ -26,17 +26,13 @@ const FriendsArea = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
         const response = await axios.get("/api/api/chat-with/get-friends");
         setFriends(response.data.friends);
         setCurrFriend({
           userName: response.data.friends[0].userName,
           email: response.data.friends[0].email,
           image: response.data.friends[0].image,
+          _id: response.data.friends[0]._id,
         });
       } catch (error) {
         console.log("sta je", error.response.data.error.errorMessage);

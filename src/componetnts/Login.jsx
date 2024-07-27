@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useRecoilState } from "recoil";
 import { authStatusAtom, userAtom } from "../recoil/atoms/userAtoms";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const [authForm, setAuthForm] = useState({
@@ -11,7 +12,7 @@ const Login = () => {
     password: "",
   });
   const [authStatus, setAuthStatus] = useRecoilState(authStatusAtom);
-  const [token, setToken] = useRecoilState(userAtom);
+  const [userInfo, setUserInfo] = useRecoilState(userAtom);
 
   const navigate = useNavigate();
 
@@ -34,12 +35,19 @@ const Login = () => {
         formData,
         config
       );
+      let token = response.data.token;
       localStorage.removeItem("authToken");
-      localStorage.setItem("authToken", response.data.token);
+      localStorage.setItem("authToken", token);
 
-      setToken({
-        token: response.data.token,
+      const decoded = jwtDecode(token);
+      setUserInfo({
+        token: token,
+        userName: decoded.userName,
+        id: decoded.id,
+        email: decoded.email,
+        image: `/images/${decoded.image}`,
       });
+
       setAuthStatus({
         successMessage: response.data.successMessage,
         errorMessage: null,

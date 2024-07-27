@@ -4,6 +4,10 @@ export const userAtom = atom({
   key: "userAtom",
   default: {
     token: "",
+    userName: null,
+    id: null,
+    email: null,
+    image: null,
   },
 });
 

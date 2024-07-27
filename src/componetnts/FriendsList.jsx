@@ -14,7 +14,9 @@ const FriendBlock = ({ friend }) => {
       userName: friend.userName,
       email: friend.email,
       image: friend.image,
+      _id: friend._id,
     });
+
   return (
     <div
       className="p-2 border-y h-24 firend-element flex items-center hover:bg-slate-300 hover:cursor-pointer "
