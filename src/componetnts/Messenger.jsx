@@ -6,19 +6,31 @@ import ShortFriendInfo from "./ShortFriendInfo";
 import MessageSend from "./MessageSend";
 import MessageContent from "./MessageContent";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { currentFriendAtom } from "../recoil/atoms/friendsAtoms";
+import {
+  activefriendsListAtom,
+  currentFriendAtom,
+} from "../recoil/atoms/friendsAtoms";
 import { userAtom } from "../recoil/atoms/userAtoms";
+import { io } from "socket.io-client";
+
 import axios from "axios";
 import { MessagesAtom } from "../recoil/atoms/messageAtoms";
+import { jwtDecode } from "jwt-decode";
 
 const Messenger = () => {
   const scrollRef = useRef();
+  const afSocket = useRef();
+  const decoded = jwtDecode(localStorage.getItem("authToken"));
 
   const currFriend = useRecoilValue(currentFriendAtom);
-  const userInfo = useRecoilValue(userAtom);
+  const [currentFriends, setCurrentFrineds] = useRecoilState(
+    activefriendsListAtom
+  );
+  const [userData, setUserData] = useRecoilState(userAtom);
   const [message, setMessage] = useRecoilState(MessagesAtom);
   const [isChecked, setIsChecked] = useState(false);
   const [text, setText] = useState("");
+  const [socketMessage, setSocketMessage] = useState("");
 
   const getMessage = async () => {
     try {
@@ -30,6 +42,61 @@ const Messenger = () => {
       console.log(error.response);
     }
   };
+
+  useEffect(() => {
+    if (!userData.id)
+      setUserData({
+        id: decoded.id,
+        email: decoded.email,
+        userName: decoded.userName,
+        image: `/images/${decoded.image}`,
+      });
+
+    afSocket.current = io("ws://localhost:8000");
+
+    afSocket.current.on("getMessage", (data) => {
+      setSocketMessage(data);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (socketMessage && currFriend)
+      if (
+        socketMessage.senderId === currFriend._id &&
+        socketMessage.receiverId === userData.id
+      ) {
+        setMessage([...message, socketMessage]);
+        setSocketMessage("");
+      }
+  }, [socketMessage]);
+
+  useEffect(() => {}, [message]);
+
+  useEffect(() => {
+    const userInfo = {
+      id: decoded.id,
+      email: decoded.email,
+      userName: decoded.userName,
+      image: `/images/${decoded.image}`,
+    };
+    afSocket.current.emit("addUser", userInfo);
+  }, []);
+
+  useEffect(() => {
+    afSocket.current.on("getActives", (data) => {
+      setCurrentFrineds(data);
+    });
+    afSocket.current.on("getUser", (data) => {
+      setCurrentFrineds(data);
+    });
+  }, []);
+
+  useEffect(() => {
+    afSocket.current.on("getActives", (data) => {
+      setCurrentFrineds(data);
+    });
+  }, []);
+
   useEffect(() => {
     getMessage();
   }, [currFriend]);
@@ -54,7 +121,7 @@ const Messenger = () => {
 
   const sendMessage = async () => {
     const messageBlock = {
-      senderName: userInfo.userName,
+      senderName: userData.userName,
       receiverId: currFriend._id,
       message: text,
     };
@@ -70,6 +137,17 @@ const Messenger = () => {
         messageBlock,
         config
       );
+      afSocket.current.emit("sendMessage", {
+        senderId: userData.id,
+        senderName: userData.userName,
+        receiverId: currFriend._id,
+        time: new Date(),
+        message: {
+          text: text,
+          image: "",
+        },
+      });
+
       getMessage();
       setText("");
     } catch (error) {
@@ -94,7 +172,7 @@ const Messenger = () => {
           <ShortFriendInfo />
           <MessageContent
             message={message}
-            senderId={userInfo.id}
+            senderId={userData.id}
             scrollRef={scrollRef}
           />
           <MessageSend

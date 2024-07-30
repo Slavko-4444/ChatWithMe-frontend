@@ -1,11 +1,11 @@
 import React from "react";
 import "../css/MessageContent.css";
 
-const Message = ({ type, text, status, date, index, scrollRef }) => {
+const Message = ({ type, text, status, date, scrollRef }) => {
   const [dt, time] = date.split("T");
   const [hours, minutes] = time.split(":");
   return (
-    <div ref={scrollRef} className={`message ${type}`} key={index}>
+    <div ref={scrollRef} className={`message ${type}`}>
       <p className="message-text inline">{text}</p>
       <div className="message-info">
         <span className={`message-status ${status.toLowerCase()}`}>
@@ -30,7 +30,7 @@ const MessageContent = ({ message, senderId, scrollRef }) => {
             text={msg.message.text}
             status={msg.status}
             date={msg.updatedAt}
-            index={index}
+            key={index}
             scrollRef={scrollRef}
           />
         );

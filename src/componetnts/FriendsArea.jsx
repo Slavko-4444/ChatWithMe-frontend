@@ -2,26 +2,19 @@ import React, { useEffect, useRef, useState } from "react";
 import "../css/FriendsArea.css";
 import UserInfo from "./UserInfo";
 import ActiveFriends from "./ActiveFriends";
-import { io } from "socket.io-client";
 import FriendsList from "./FriendsList";
-import { jwtDecode } from "jwt-decode";
 import {
   activefriendsListAtom,
   currentFriendAtom,
   friendsListAtom,
 } from "../recoil/atoms/friendsAtoms";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import axios from "axios";
 
 const FriendsArea = () => {
-  const afSocket = useRef();
-  const decoded = jwtDecode(localStorage.getItem("authToken"));
-
   const [currFriend, setCurrFriend] = useRecoilState(currentFriendAtom);
   const [friends, setFriends] = useRecoilState(friendsListAtom);
-  const [currentFriends, setCurrentFrineds] = useRecoilState(
-    activefriendsListAtom
-  );
+  const currentFriends = useRecoilValue(activefriendsListAtom);
 
   useEffect(() => {
     async function fetchData() {
@@ -40,28 +33,6 @@ const FriendsArea = () => {
     }
 
     fetchData();
-  }, []);
-
-  // useEffect(() => {}, [friends]);
-
-  useEffect(() => {
-    afSocket.current = io("ws://localhost:8000");
-  }, []);
-  useEffect(() => {
-    const userInfo = {
-      id: decoded.id,
-      email: decoded.email,
-      userName: decoded.userName,
-      image: `/images/${decoded.image}`,
-    };
-
-    afSocket.current.emit("addUser", userInfo);
-  }, []);
-
-  useEffect(() => {
-    afSocket.current.on("getActives", (data) => {
-      setCurrentFrineds(data);
-    });
   }, []);
 
   return (
